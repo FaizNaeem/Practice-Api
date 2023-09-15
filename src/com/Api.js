@@ -8,8 +8,8 @@ export default   function Api() {
 //         new1.map((e)=>{
 // console.log(e);
 //         })
-        // Setuser(new1)
-        console.log(new1);
+console.log(new1);
+// Setuser(new1)
 //         user.map((e,i,a)=>{
 // console.log(e,i,a);
         // })
