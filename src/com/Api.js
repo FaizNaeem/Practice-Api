@@ -26,7 +26,7 @@ return(
 
 {
   Object.entries(users).map((ele)=>{
-      console.log(ele[2]);
+      console.log(ele);
 return(
     <>
     <h1>{ele}</h1>
