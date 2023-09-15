@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
 export default   function Api() {
-    const [user,Setuser]=useState([])
+    const [users,Setuser]=useState([])
     let auth=async()=>{
         let data = await fetch('https://dummyjson.com/products/1')
-        let new1= await data.json()
+        Setuser(await data.json())
+        // Setuser(new1)
+        // console.log(user);
 //         new1.map((e)=>{
 // console.log(e);
 //         })
-console.log(new1);
+// console.log(new1);
 // Setuser(new1)
 //         user.map((e,i,a)=>{
 // console.log(e,i,a);
@@ -21,7 +23,17 @@ auth()
 // .then(json => console.log(json))
 return(
 <>
-{/* <h1>{user}</h1> */}
+
+{
+  Object.entries(users).map((ele)=>{
+      console.log(ele[2]);
+return(
+    <>
+    <h1>{ele}</h1>
+    </>
+)
+    })
+}
 </>
 )
 }
