@@ -5,14 +5,14 @@ import { Layout, Menu, theme } from 'antd';
 import Navbar from './Navbar';
 import Card from './Card';
 const { Header, Content, Footer, Sider } = Layout;
-let gre = ">"
+
 const Api = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
     <>
-   
+  
     <Navbar />
     <Layout>
   
