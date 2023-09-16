@@ -16,7 +16,6 @@ const Api = () => {
     <Navbar />
     <Layout>
   
-
       <Sider style={{color:'white', background:'white'}}
         breakpoint="lg"
         collapsedWidth="0"
