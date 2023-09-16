@@ -14,7 +14,6 @@ const Api = () => {
     <>
    
     <Navbar />
-
     <Layout>
   
 
