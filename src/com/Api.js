@@ -140,7 +140,6 @@ uploadBytes(storageRef, file).then((snapshot) => {
           </div>
       </Sider>
   
-   
       <Layout>
         <div style={{
               padding: 0,
