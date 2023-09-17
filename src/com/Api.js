@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Api.css'
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
-import { collection, addDoc ,db,getStorage, ref, uploadBytes } from "./config/firebase"; 
+import { collection, addDoc ,db,getStorage, ref, uploadBytes,getDownloadURL } from "./config/firebase"; 
 import Navbar from './Navbar';
 import Card from './Card';
 const { Header, Content, Footer, Sider } = Layout;
@@ -11,8 +11,8 @@ const Api = () => {
   const [price ,setPrice]=useState("")
   const [des ,setDes]=useState("")
   const [Category ,setCategory]=useState("")
-  const [file ,setFile]=useState()
-  const submit=async()=>{
+  const [file ,setFile]=useState('')
+  const submit=()=>{
     console.log(file);
 
     // console.log(title);
@@ -21,23 +21,36 @@ const Api = () => {
     // console.log(Category);
     // console.log(title);
     const storage = getStorage();
-const storageRef = ref(storage, 'some-child');
-
-// 'file' comes from the Blob or File API
+    let random_id= new Date().getTime().toString()
+    console.log(random_id);
+const storageRef = ref(storage, random_id);
 uploadBytes(storageRef, file).then((snapshot) => {
   console.log('Uploaded a blob or file!');
+  getDownloadURL(ref(storage, random_id))
+  .then(async(url) => {
+ try {
+      const docRef = await addDoc(collection(db, "Sir-Assignment"), {
+      Title:title,
+      Price:price,
+      Descripion:des,
+      Category:Category,
+      url:url 
+      });
+      console.log("Document written with ID: ", docRef.id);
+      setCategory('')
+      setDes('')
+      setFile('')
+      setPrice('')
+      setTitle('')
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  })
+  .catch((error) => {
+    // Handle any errors
+  });
 });
-    // try {
-    //   const docRef = await addDoc(collection(db, "Sir-Assignment"), {
-    //   Title:title,
-    //   Price:price,
-    //   Descripion:des,
-    //   Category:Category
-    //   });
-    //   console.log("Document written with ID: ", docRef.id);
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    // }
+   
     
   }
   const {
