@@ -138,7 +138,6 @@ uploadBytes(storageRef, file).then((snapshot) => {
 
          </div>
           </div>
-    
       </Sider>
   
    
