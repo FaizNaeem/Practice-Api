@@ -65,7 +65,6 @@ uploadBytes(storageRef, file).then((snapshot) => {
       <Sider style={{color:'white', background:'white'}}
         breakpoint="lg"
         collapsedWidth="0"
-        
         onBreakpoint={(broken) => {
           console.log(broken);
         }}
