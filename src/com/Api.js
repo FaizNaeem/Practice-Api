@@ -1,11 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Api.css'
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
+import { collection, addDoc ,db,getStorage, ref, uploadBytes } from "./config/firebase"; 
 import Navbar from './Navbar';
 import Card from './Card';
 const { Header, Content, Footer, Sider } = Layout;
 const Api = () => {
+  const [title ,setTitle]=useState("")
+  const [price ,setPrice]=useState("")
+  const [des ,setDes]=useState("")
+  const [Category ,setCategory]=useState("")
+  const [file ,setFile]=useState()
+  const submit=async()=>{
+    console.log(file);
+
+    // console.log(title);
+    // console.log(price);
+    // console.log(des);
+    // console.log(Category);
+    // console.log(title);
+    const storage = getStorage();
+const storageRef = ref(storage, 'some-child');
+
+// 'file' comes from the Blob or File API
+uploadBytes(storageRef, file).then((snapshot) => {
+  console.log('Uploaded a blob or file!');
+});
+    // try {
+    //   const docRef = await addDoc(collection(db, "Sir-Assignment"), {
+    //   Title:title,
+    //   Price:price,
+    //   Descripion:des,
+    //   Category:Category
+    //   });
+    //   console.log("Document written with ID: ", docRef.id);
+    // } catch (e) {
+    //   console.error("Error adding document: ", e);
+    // }
+    
+  }
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -106,21 +140,21 @@ const Api = () => {
                         Title
 <div className="input-group  mb-3 mt-2 ">
   
-  <input type="text" className="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1"/>
+  <input type="text" className="form-control" value={title} onChange={(e)=> setTitle(e.target.value)} placeholder="Title" aria-label="Username" aria-describedby="basic-addon1"/>
 </div>
                     </label>
                     <label htmlFor="">
                         Image
 <div className="input-group  mb-3 mt-2 ">
   
-  <input type="File" className="form-control fil" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"/>
+  <input type="File" className="form-control fil"  onChange={(e)=> setFile(e.target.files[0])} placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"/>
 </div>
 </label>
 <label htmlFor="">
                         Price
 <div className="input-group  mb-3 mt-2 ">
   
-  <input type="text" className="form-control" placeholder="Price" aria-label="Username" aria-describedby="basic-addon1"/>
+  <input type="text" className="form-control" value={price} onChange={(e)=> setPrice(e.target.value)} placeholder="Price" aria-label="Username" aria-describedby="basic-addon1"/>
 </div>
 </label>
 
@@ -130,17 +164,17 @@ const Api = () => {
                         Category
                 <div class="input-group  mb-3 mt-2">
  
-  <input type="text" class="form-control" placeholder="Category" aria-label="Username" aria-describedby="basic-addon1"/>
+  <input type="text" class="form-control" value={Category} onChange={(e)=> setCategory(e.target.value)} placeholder="Category" aria-label="Username" aria-describedby="basic-addon1"/>
 </div>
 </label>
 <label htmlFor="">
                         Description
 <div class="input-group  mb-3 mt-2">
  
-  <input type="text" class="form-control" placeholder="Description" aria-label="Username" aria-describedby="basic-addon1"/>
+  <input type="text" class="form-control" value={des} onChange={(e)=> setDes(e.target.value)} placeholder="Description" aria-label="Username" aria-describedby="basic-addon1"/>
 </div>
 </label>
-<button className='btn h btn-success '>Add/Edit Service</button>
+<button className='btn h btn-success ' id='btn' onClick={submit}>Add/Edit Service</button>
                 </div>
         </div>
       
