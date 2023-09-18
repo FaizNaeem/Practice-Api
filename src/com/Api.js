@@ -8,10 +8,17 @@ import Card from './Card';
 const { Header, Content, Footer, Sider } = Layout;
 const Api = () => {
   const [title ,setTitle]=useState("")
+  const [filter ,setFilter]=useState("")
   const [price ,setPrice]=useState("")
   const [des ,setDes]=useState("")
   const [Category ,setCategory]=useState("")
   const [file ,setFile]=useState('')
+  const [selectedValue, setSelectedValue] = useState('');
+// console.log(selectedValue);
+// console.log(filter);
+  const handleRadioChange = () => {
+    console.log(selectedValue);
+  };
   const submit=()=>{
     console.log(file);
 
@@ -76,7 +83,7 @@ uploadBytes(storageRef, file).then((snapshot) => {
          <div style={{display:'flex', flexDirection:'column'}}>
           <h3 align="center" style={{color:"green"}}>Filter</h3>
          <div className="input-group gh mb-3 ">
-  <input type="text" className="form-control" placeholder="Filter" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+  <input type="text" onChange={(e)=>setFilter(e.target.value)} className="form-control" placeholder="Filter" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
   <div className="input-group-append">
     <span className="input-group-text bg-primary" style={{color:'white'}} id="basic-addon2"><i className="fa-solid fa-magnifying-glass"></i></span>
   </div>
@@ -85,25 +92,29 @@ uploadBytes(storageRef, file).then((snapshot) => {
   <h3 align="center" className='mt-3' style={{color:"green"}}>Price</h3>
   <div className="custom-control custom-radio" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
   
-  <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" />
+  <input type="radio" onClick={handleRadioChange} id="customRadio1" value={100} onChange={(e)=>setSelectedValue(e.target.value)}
+ name="customRadio" className="custom-control-input" />
   <label className="custom-control-label" style={{marginLeft:"20px"}} for="customRadio1"><i className="fa-solid fa-greater-than"></i> 100 </label>
 </div> 
 
 <div className="custom-control custom-radio" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
   
-  <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" />
+<input type="radio" onClick={handleRadioChange} id="customRadio1" value={200} onChange={(e)=>setSelectedValue(e.target.value)}
+ name="customRadio" className="custom-control-input" />
   <label className="custom-control-label" style={{marginLeft:"20px"}} for="customRadio1"><i className="fa-solid fa-greater-than"></i> 200 </label>
 </div> 
 
 <div className="custom-control custom-radio" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
   
-  <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" />
+<input type="radio" onClick={handleRadioChange} id="customRadio1" value={300} onChange={(e)=>setSelectedValue(e.target.value)}
+ name="customRadio" className="custom-control-input" />
   <label className="custom-control-label" style={{marginLeft:"20px"}} for="customRadio1"><i className="fa-solid fa-greater-than"></i> 300 </label>
 </div> 
 
 <div className="custom-control custom-radio" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
   
-  <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" />
+<input type="radio" onClick={handleRadioChange} id="customRadio1" value={400} onChange={(e)=>setSelectedValue(e.target.value)}
+ name="customRadio" className="custom-control-input" />
   <label className="custom-control-label" style={{marginLeft:"20px"}} for="customRadio1"><i className="fa-solid fa-greater-than"></i> 400 </label>
 </div> 
 <h3 align="center" className='mt-3' style={{color:"green"}}>Sort By</h3>
@@ -199,7 +210,7 @@ uploadBytes(storageRef, file).then((snapshot) => {
               background: colorBgContainer,
             }}
           >
-            <Card/>
+            <Card selectedValue={selectedValue} filter={filter}/>
            
           </div>
         </Content>
@@ -208,7 +219,7 @@ uploadBytes(storageRef, file).then((snapshot) => {
             textAlign: 'center',
           }}
         >
-          Ant Design ©2023 Created by Ant UED
+          Faiz Design ©2023 Created by Faiz Naeem
         </Footer>
       </Layout>
     </Layout>

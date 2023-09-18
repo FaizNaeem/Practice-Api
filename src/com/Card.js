@@ -1,195 +1,112 @@
-import React ,{useState,useEffect}from 'react';
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { Avatar, Card } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { EditOutlined, EllipsisOutlined, SettingOutlined, DeleteOutlined } from '@ant-design/icons';
+import { db, collection, getDocs, doc, updateDoc, deleteDoc } from "./config/firebase";
+import { Avatar, Card, Button } from 'antd';
 const { Meta } = Card;
-const Card1 = () => {
-    let [users, Setusers] = useState([]);
-  
-  useEffect(() => {
-  fetch('https://dummyjson.com/products/1')
-    .then(function (res) {
-      return res.json();
-    })
-    .then(function (data) {
-        Setusers(data.products);
-      console.log(data);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  }, []);
-    return(
-        <>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', width: '100%' }} className='my-5'>
-{/* {users.map((item) => (
-    <div className="news-card">
-    <img src={item.thumbnail} alt="" />
-    <h2>{item.title}</h2>
-    <p>{item.description}</p>
-    {/* Add other fields you want to display */}
 
-        {/* </div> */}
-    {/* //   ))} */} 
-    {/* /} */}
-        <Card 
-                 style={{
-                    width: 300,
-                    
-                    marginBottom: 25,
-                    height: 330,
-                }}
-                
-                cover={
-        <img
-        alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        />
+const Card1 = ({ selectedValue, filter }) => {
+  const [cardData, setCardData] = useState([]);
+  const [filteredCards, setFilteredCards] = useState([]);
+
+  const fetchData = async () => {
+    const querySnapshot = await getDocs(collection(db, "Sir-Assignment"));
+    const data = [];
+    querySnapshot.forEach((doc) => {
+      data.push({ id: doc.id, ...doc.data() });
+    });
+    setCardData(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    // Filter the cards based on selectedValue
+    const filtered = cardData.filter((item) => parseFloat(item.Price) > selectedValue);
+    setFilteredCards(filtered);
+  }, [selectedValue]);
+
+  useEffect(() => {
+    // Filter the cards based on category input
+    if (filter) {
+      const filtered = cardData.filter((item) => item.Category.toLowerCase().includes(filter.toLowerCase()));
+      setFilteredCards(filtered);
+    } else {
+      // If no category filter is provided, use the selectedValue filter
+      const filtered = cardData.filter((item) => parseFloat(item.Price) > selectedValue);
+    //   console.log("no card");
+      setFilteredCards(filtered);
     }
-    actions={[
-        <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" />,
-        <EllipsisOutlined key="ellipsis" />,
-    ]}
-    >
-    <Meta
-      avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title="Card title"
-      description="This is the description"
-      />
-  </Card>
-  <Card 
-                 style={{
-                    width: 300,
-                  
-                    marginBottom: 25,
-                    height: 330,
-                }}
-                
-                cover={
-        <img
-        alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        />
-    }
-    actions={[
-        <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" />,
-        <EllipsisOutlined key="ellipsis" />,
-    ]}
-    >
-    <Meta
-      avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title="Card title"
-      description="This is the description"
-      />
-  </Card>
-  <Card 
-                 style={{
-                    width: 300,
-                   
-                    marginBottom: 25,
-                    height: 330,
-                }}
-                
-                cover={
-        <img
-        alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        />
-    }
-    actions={[
-        <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" />,
-        <EllipsisOutlined key="ellipsis" />,
-    ]}
-    >
-    <Meta
-      avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title="Card title"
-      description="This is the description"
-      />
-  </Card>
-  <Card 
-                 style={{
-                    width: 300,
-                    marginTop: 25,
-                    marginBottom: 25,
-                    height: 330,
-                }}
-                
-                cover={
-        <img
-        alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        />
-    }
-    actions={[
-        <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" />,
-        <EllipsisOutlined key="ellipsis" />,
-    ]}
-    >
-    <Meta
-      avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title="Card title"
-      description="This is the description"
-      />
-  </Card>
-  <Card 
-                 style={{
-                    width: 300,
-                    marginTop: 25,
-                    marginBottom: 25,
-                    height: 330,
-                }}
-                
-                cover={
-        <img
-        alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        />
-    }
-    actions={[
-        <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" />,
-        <EllipsisOutlined key="ellipsis" />,
-    ]}
-    >
-    <Meta
-      avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title="Card title"
-      description="This is the description"
-      />
-  </Card>
-  <Card 
-                 style={{
-                    width: 300,
-                    marginTop: 25,
-                    marginBottom: 25,
-                    height: 330,
-                }}
-                
-                cover={
-        <img
-        alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        />
-    }
-    actions={[
-        <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" />,
-        <EllipsisOutlined key="ellipsis" />,
-    ]}
-    >
-    <Meta
-      avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title="Card title"
-      description="This is the description"
-      />
-  </Card>
+  }, [filter, cardData, selectedValue]);
+//   console.log("no card");
+
+  const handleEdit = async (item) => {
+    // Assuming "item.id" is the unique identifier for the document you want to edit
+    const itemDocRef = doc(db, "Sir-Assignment", item.id);
+
+    // Assuming you want to update the "title" field
+    await updateDoc(itemDocRef, {
+      title: "Updated Title", // Replace with the new title
+    });
+
+    // Refresh the card data
+    fetchData();
+  };
+
+  const handleDelete = async (item) => {
+    // Assuming "item.id" is the unique identifier for the document you want to delete
+    const itemDocRef = doc(db, "Sir-Assignment", item.id);
+
+    // Delete the document
+    await deleteDoc(itemDocRef);
+// alert("delete")
+
+    // Refresh the card data
+    fetchData();
+  };
+
+  return (
+    <>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', width: '100%' }} className='my-5'>
+        
+      {filteredCards.length === 0 ? (
+          <h3>Sorry No Cards Found😐</h3>
+        ) : (
+          filteredCards.map((item, index) => (
+          <Card
+            key={index}
+            style={{
+              width: 300,
+              marginBottom: 25,
+              height: 330,
+            }}
+            cover={
+              <img
+                alt="example"
+                src={item.url}
+                style={{ height: "200px" }}
+              />
+            }
+            actions={[
+              <SettingOutlined key="setting" onClick={() => handleEdit(item)} />,
+              <EditOutlined key="edit" onClick={() => handleEdit(item)} />,
+              <DeleteOutlined key="delete" onClick={() => handleDelete(item)} />,
+            ]}
+          >
+            <Meta
+              avatar={<Avatar src={item.url} />}
+              title={item.Title}
+              description={item.Descripion}
+            />
+            <h5 align="center">{item.Price}</h5>
+            <h5 align="center">{item.Category}</h5>
+          </Card>
+        ))
+        )}
       </div>
-      </>
-)
-}
-;
+    </>
+  );
+};
+
 export default Card1;
